@@ -18,22 +18,21 @@
           <th>Action</th>
       </thead>
       <tbody>
-    {% for candidate in candidates %}
-      
-    <tr>
-      <td>{{ candidate.fullname }}</td>
-      <td>{{ candidate.position }}</td>
-      <td>{{ candidate.bio }}</td>
-      <td><img src="/media/{{ candidate.photo }}" width="80" height="80" alt="{{ candidate.fullname }}'s Avatar" class="img img-fluid"></td>
-      
-      <td>
-        <button class='btn btn-primary btn-sm edit btn-flat' data-id='{{ candidate.id }}'><i class='fa fa-edit'></i> Edit</button>
-        <button class='btn btn-danger btn-sm delete btn-flat' data-id='{{ candidate.id }}'><i class='fa fa-trash'></i> Delete</button>
-      </td>
-    </tr>
-    {% endfor %}      
-
-                            </tbody>
+        {% for candidate in candidates %}
+          
+        <tr>
+          <td>{{ candidate.fullname }}</td>
+          <td>{{ candidate.position }}</td>
+          <td>{{ candidate.bio }}</td>
+          <td><img src="/media/{{ candidate.photo }}" width="80" height="80" alt="{{ candidate.fullname }}'s Avatar" class="img img-fluid" style="object-fit: cover;"></td>
+          
+          <td>
+            <button class='btn btn-primary btn-sm edit btn-flat' data-id='{{ candidate.id }}'><i class='fa fa-edit'></i> Edit</button>
+            <button class='btn btn-danger btn-sm delete btn-flat' data-id='{{ candidate.id }}'><i class='fa fa-trash'></i> Delete</button>
+          </td>
+        </tr>
+        {% endfor %}      
+      </tbody>
   </table>
 </div>
 </div>

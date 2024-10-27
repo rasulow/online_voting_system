@@ -13,12 +13,16 @@
 
              
                 <div class="modal-body">
-                    {% for field in form1  %}
-                    <div class="form-group has-feedback">
-                        <span class="text-danger">{{field.errors}}</span>
-                        {{field.label_tag}}
-                        {{field}}
-                    </div>
+                    {% for field in form1 %}
+                        <div class="form-group has-feedback">
+                            {{ field.errors }}  
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+
+                            {% if field.help_text %}
+                                <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                        </div>
                     {% endfor %}
 
                     {% for field in form2  %}

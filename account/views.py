@@ -14,10 +14,14 @@ def account_login(request):
         else:
             return redirect(reverse("voterDashboard"))
 
+    
     context = {}
     if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        print(username, password)
         user = EmailBackend.authenticate(request, username=request.POST.get(
-            'email'), password=request.POST.get('password'))
+            'username'), password=request.POST.get('password'))
         if user != None:
             login(request, user)
             if user.user_type == '1':
