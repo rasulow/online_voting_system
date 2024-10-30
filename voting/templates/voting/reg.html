@@ -8,16 +8,28 @@
 
         <div class="login-box-body">
             <!-- <p class="login-box-msg">Register an account</p> -->
-    <form action="{% url 'account_register' %}" method="POST">
+            <form action="{% url 'account_register' %}" method="POST">
                 {% csrf_token %}
 
              
                 <div class="modal-body">
+                    {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li class="{{ message.tags }}" style="color: red;">{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                     {% for field in form1 %}
                         <div class="form-group has-feedback">
-                            {{ field.errors }}  
-                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                            {{ field }}
+                            {% if field.label != 'First name' and field.label != 'Last name' %}
+                                {% if field.label == 'Username' %}
+                                    <label for="{{ field.id_for_label }}">Passport</label>
+                                {% else %}
+                                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {% endif %}
+                                {{ field }}
+                            {% endif %}
 
                             {% if field.help_text %}
                                 <small class="form-text text-muted">{{ field.help_text }}</small>
@@ -26,11 +38,11 @@
                     {% endfor %}
 
                     {% for field in form2  %}
-                    <div class="form-group has-feedback">
-                        <span class="text-danger">{{field.errors}}</span>
-                        {{field.label_tag}}
-                        {{field}}
-                    </div>
+                        <div class="form-group has-feedback">
+                            <span class="text-danger">{{field.errors}}</span>
+                            {{field.label_tag}}
+                            {{field}}
+                        </div>
                     {% endfor %}
 
 
@@ -46,10 +58,9 @@
                         </div>
                     </div> 
                 </div>
+            </form>
         </div>
-        </form>
-        </div>
-            </div>
+    </div>
 
     <!-- Modal -->
     <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="register" aria-hidden="true">

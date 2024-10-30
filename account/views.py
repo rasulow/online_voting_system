@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, reverse
 from .email_backend import EmailBackend
 from django.contrib import messages
+from django.core.exceptions import ValidationError
 from .forms import CustomUserForm
 from voting.forms import VoterForm
 from django.contrib.auth import login, logout
@@ -42,18 +43,25 @@ def account_register(request):
         'form1': userForm,
         'form2': voterForm
     }
+
     if request.method == 'POST':
         if userForm.is_valid() and voterForm.is_valid():
-            user = userForm.save(commit=False)
-            voter = voterForm.save(commit=False)
-            voter.admin = user
-            user.save()
-            voter.save()
-            messages.success(request, "Account created. You can login now!")
-            return redirect(reverse('account_login'))
+            try:
+                user = userForm.save(commit=False)
+                voter = voterForm.save(commit=False)
+                
+                voter.admin = user  # Assign voter to user (admin)
+
+                user.save()  # Save user to the database
+                voter.save()  # Save voter to the database
+                
+                messages.success(request, "Account created. You can login now!")
+                return redirect(reverse('account_login'))
+            except ValidationError as e:
+                messages.error(request, e.message)
         else:
             messages.error(request, "Provided data failed validation")
-            # return account_login(request)
+
     return render(request, "voting/reg.html", context)
 
 

@@ -6,6 +6,7 @@ charset-normalizer==3.3.2
 cssselect2==0.7.0
 Django==5.1.1
 django-renderpdf==4.0.0
+django-unfold==0.40.0
 fonttools==4.54.1
 html5lib==1.1
 idna==3.10
